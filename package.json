@@ -18,6 +18,6 @@
     "@forge/api": "^4.0.0"
   },
   "devDependencies": {
-    "@forge/lint": "^4.0.0"
+    "@forge/lint": "^5.15.1"
   }
 }
