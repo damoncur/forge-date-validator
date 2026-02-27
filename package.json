@@ -1,0 +1,23 @@
+{
+  "name": "forge-date-validator",
+  "version": "1.0.0",
+  "description": "Atlassian Forge workflow validator that blocks issue transitions when Start Date and Due Date are not set.",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "forge lint"
+  },
+  "keywords": [
+    "atlassian",
+    "forge",
+    "jira",
+    "workflow",
+    "validator"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@forge/api": "^4.0.0"
+  },
+  "devDependencies": {
+    "@forge/lint": "^4.0.0"
+  }
+}

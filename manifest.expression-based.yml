@@ -1,0 +1,42 @@
+# =============================================================================
+# ALTERNATIVE: Expression-based validator (no function code required)
+# =============================================================================
+# This is a simpler approach that uses a Jira expression directly in the
+# manifest instead of a lambda function.  It avoids the need for @forge/api
+# and any runtime code.
+#
+# IMPORTANT: issue.dueDate is a standard Jira expression property, but
+# "Start Date" is NOT listed in the standard Jira expressions type reference.
+# Depending on your Jira Cloud instance it may be:
+#   - issue.customfield_10015   (most common custom field ID)
+#   - issue.customfield_XXXXX   (check Admin > Issues > Custom fields)
+#
+# Replace CUSTOMFIELD_ID below with the correct ID for your instance.
+# To find it, go to:
+#   Jira Admin > Issues > Custom fields > Start date > look at the URL
+#   e.g. .../customFields/10015 means the field key is customfield_10015
+# =============================================================================
+modules:
+  jira:workflowValidator:
+    - key: date-fields-required-validator
+      name: Start Date and Due Date required
+      description: >-
+        Validates that both Start Date and Due Date are set before allowing the
+        issue to transition.
+      expression: >-
+        issue.dueDate != null && issue.customfield_10015 != null
+          ? true
+          : (issue.dueDate == null && issue.customfield_10015 == null
+              ? "Both Start Date and Due Date must be set before transitioning this issue."
+              : issue.customfield_10015 == null
+                ? "Start Date must be set before transitioning this issue."
+                : "Due Date must be set before transitioning this issue.")
+      errorMessage: >-
+        Start Date and Due Date must be set before transitioning this issue.
+permissions:
+  scopes:
+    - read:jira-work
+app:
+  runtime:
+    name: nodejs22.x
+  id: ari:cloud:ecosystem::app/<your-app-id>
