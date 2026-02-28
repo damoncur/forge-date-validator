@@ -8,7 +8,7 @@ modules:
       function: validator
   function:
     - key: validator
-      handler: src/index.run
+      handler: index.run
 permissions:
   scopes:
     - read:jira-work
